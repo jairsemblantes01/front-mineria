@@ -1,21 +1,5 @@
 version: "3.8"
 services:
-  front:
-    # build: ./app
-    image: jairum/front-mineria
-    ports:
-      - "3009:3009"
-    environment:
-      - BACKEND=http://proxy/app1
-      - PORT=3009
-    depends_on:
-      - modelo
-    labels:
-      - "traefik.http.routers.front.rule=PathPrefix(`/app2`)"
-      - "traefik.http.middlewares.front.stripprefix.prefixes=/app2"
-      - "traefik.http.routers.front.middlewares=front"
-    expose:
-      - 3009
   proxy:
     image: traefik:v2.9.6
     command: --api.insecure=true --providers.docker
@@ -36,10 +20,25 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - token_firmador=token
+      - token_firmador=asd
     expose:
       - "5000"
     labels:
       - "traefik.http.routers.modelo.rule=PathPrefix(`/app1`)"
       - "traefik.http.middlewares.modelo.stripprefix.prefixes=/app1"
       - "traefik.http.routers.modelo.middlewares=modelo"
+  front:
+    image: jairum/front-mineria
+    ports:
+      - "3009:3009"
+    environment:
+      - BACKEND=http://proxy/app1
+      - PORT=3009
+    depends_on:
+      - modelo
+    labels:
+      - "traefik.http.routers.front.rule=PathPrefix(`/app2`)"
+      - "traefik.http.middlewares.front.stripprefix.prefixes=/app2"
+      - "traefik.http.routers.front.middlewares=front"
+    expose:
+      - 3009
