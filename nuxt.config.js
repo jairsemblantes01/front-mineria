@@ -1,12 +1,7 @@
-const BACKEND = process.env.BACKEND || 'https://api-firmas-dev.toc.com.ec'
-// const BACKEND_HELP = process.env.BACKEND_HELP || 'https://api-tocdesk-firmas-dev.toc.com.ec'
-const BACKEND_HELP = process.env.BACKEND_HELP || 'http://localhost:3005'
+const BACKEND = process.env.BACKEND || 'http://localhost:5000'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   // fix
-  publicRuntimeConfig: {
-    BACKEND_HELP
-  },
   server: {
     port: process.env.PORT || 3009,
     host: '0.0.0.0'
@@ -77,11 +72,6 @@ export default {
     '/api/': {
       target: BACKEND,
       pathRewrite: { '^/api/': '' },
-      changeOrigin: true
-    },
-    '/api2/': {
-      target: BACKEND_HELP,
-      pathRewrite: { '^/api2/': '' },
       changeOrigin: true
     }
   },

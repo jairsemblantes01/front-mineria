@@ -140,16 +140,8 @@ export default {
     async init () {
       try {
         this.isLoadingTable = true
-        const resp = await this.$axios.$get(this.endpoint, {
-          params: this.params
-        })
-        this.data = resp.data
-        if (resp.options) {
-          this.options = resp.options
-          this.states = await this.options.TypesStatus && this.options.TypesStatus.map(x => { return { value: x.id.toString(), text: x.description } })
-        }
-        this.pagination.total = resp.total
-        this.total = this.pagination.total
+        const resp = await this.$axios.$get(this.endpoint)
+        this.data = resp
       } catch (err) {
         const message = err.response ? err.response.data.message : err.message
         this.$error({

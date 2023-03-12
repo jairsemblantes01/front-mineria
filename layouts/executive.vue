@@ -86,12 +86,6 @@ export default {
       collapsed: true
     }
   },
-  methods: {
-    async logout () {
-      await this.$store.dispatch('session/executiveLogout')
-      await this.$router.push({ path: '/executive/login' })
-    }
-  }
 }
 </script>
 
