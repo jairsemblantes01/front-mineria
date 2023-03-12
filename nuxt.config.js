@@ -40,7 +40,6 @@ export default {
     { src: '@/plugins/axios.js', mode: 'client' },
     { src: '@/plugins/sockets.js', ssr: false },
     { src: '@/plugins/vee-validate.js' },
-    { src: '@/plugins/inputs.js' },
     { src: '@/plugins/filters.js' },
     { src: '@/plugins/vuesax.js' },
     { src: '@/plugins/vue-pad.js', mode: 'client' },
