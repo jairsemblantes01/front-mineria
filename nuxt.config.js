@@ -10,7 +10,7 @@ export default {
     middleware: 'check-auth'
   },
   head: {
-    title: 'Firmaselectrónicas.ec',
+    title: 'Mineria de datos',
     htmlAttrs: {
       lang: 'en'
     },
