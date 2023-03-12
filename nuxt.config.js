@@ -72,11 +72,6 @@ export default {
       target: BACKEND,
       pathRewrite: { '^/api/': '' },
       changeOrigin: true
-    },
-    '/api2/': {
-      target: BACKEND_HELP,
-      pathRewrite: { '^/api2/': '' },
-      changeOrigin: true
     }
   },
 

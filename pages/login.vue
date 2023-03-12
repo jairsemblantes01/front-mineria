@@ -239,23 +239,3 @@ export default {
   }
 }
 </script>
-
-
-
-<div class="flex flex-col items-start space-y-8 tracking-tight lg:max-w-3xl">
-<div class="relative">
-  <a>
-    <img width="500px" src="https://socialdigital.iadb.org/sites/default/files/2021-02/Imagenes-Post_GS-POSTEO-copy-06.png" alt="">
-  </a>
-  <h2 v-if="!manager" class="text-5xl font-bold text-prim xl:text-6xl mt-10">
-    Sistema de gestion biometrica empresarial
-  </h2>
-  <h2 v-if="manager" class="text-5xl font-bold text-prim xl:text-6xl">
-    Administrador de firmas electrónicas
-  </h2>
-</div>
-<p class="text-2xl text-gray-700">
-  Nuestro sistema de control de asistencia basado en <b>biometráa</b> ayduara a tu empresa a lleavr un control completo
-  de los horarios de tus trabajadores.
-</p>
-</div>
