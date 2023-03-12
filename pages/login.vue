@@ -174,42 +174,14 @@ export default {
     }
   },
   methods: {
-    /* opemDataPicker () {
-      const ref = this.$refs.dateRef
-      console.log(this.$refs.dateRef.input)
-      // ref.$refs.input.click()
-    }, */
-    async sendRestore (e) {
-      e.preventDefault()
-      try {
-        this.authenticate.showLock = false
-        this.isLoading = true
-        if (await this.$refs.reset.validate()) {
-          const { token, email } = await this.$axios
-            .$get('/api/clients/sent-restore-password/' + this.authenticate.id)
-          token
-            ? await this.$router.push('/reset-password/' + token + '?pwd=' + this.authenticate.id + '&hide=' + email)
-            : this.authenticate.showError = true
-        }
-      } catch (err) {
-        const message = err.response ? err.response.data.message : err.message
-        const code = err.response ? err.response.data.typeCode : ' '
-        this.$error({
-          title: 'Ha ocurrido un error',
-          content: `${code} :: ${message}`,
-          okText: 'Aceptar'
-        })
-        if (code && code === 'TokenBlocked') {
-          this.authenticate.showLock = true
-        }
-      } finally {
-        this.isLoading = false
-      }
-    },
     login (e) {
       e.preventDefault()
       try {
-        this.$router.push('/admin')
+        if (this.password === 'admin' && this.ci === 'admin') {
+          this.$router.push('/admin')
+        } else {
+          this.$message.warning('Usuario o contraseña incorrectos')
+        }
       } catch (err) {
         if (err && err.response && err.response.data) {
           this.$message.warning(err.response.data.message)
