@@ -1,0 +1,66 @@
+[
+  {
+    "key": "/",
+    "title": "Certificados",
+    "img": "desktop",
+    "check": false
+  },
+  {
+    "key": "/deletes",
+    "title": "Solicitudes eliminadas",
+    "img": "delete",
+    "check": false
+  },
+  {
+    "key": "/clients",
+    "title": "Clientes",
+    "img": "team",
+    "check": false
+  },
+  {
+    "key": "/operators",
+    "title": "Operadores",
+    "img": "user",
+    "check": false
+  },
+  {
+    "key": "/prices",
+    "title": "Precios",
+    "img": "user",
+    "check": false
+  },
+  {
+    "key": "/coupons",
+    "title": "Cupones",
+    "img": "gift",
+    "check": false
+  },
+  {
+    "key": "/convenios",
+    "title": "Convenios",
+    "img": "car",
+    "check": false,
+    "children": [
+      {
+        "key": "/convenios",
+        "title": "Solicitudes",
+        "check": false
+      },
+      {
+        "key": "/convenios/load-information",
+        "title": "Carga masiva clientes",
+        "check": false
+      },
+      {
+        "key": "/convenios/clients",
+        "title": "Clientes",
+        "check": false
+      },
+      {
+        "key": "/convenios/clients/removed",
+        "title": "Clientes eliminados",
+        "check": false
+      }
+    ]
+  }
+]

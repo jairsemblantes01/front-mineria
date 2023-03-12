@@ -1,0 +1,12 @@
+{
+    "javascript.format.semicolons": "remove",
+    "vetur.completion.scaffoldSnippetSources": {
+        "prettier": {
+            "semi": false
+        }
+    },
+    "prettier.jsxSingleQuote": true,
+    "prettier.semi": false,
+    "prettier.singleQuote": true,
+    "prettier.tabWidth": 4,
+}
