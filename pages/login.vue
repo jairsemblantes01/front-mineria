@@ -79,7 +79,7 @@
                   </div>
                 </div>
                 <div class="relative">
-                  <button type="submit" :disabled="!ci" class="inline-block w-full px-5 mt-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-prim rounded-lg hover:bg-primh">
+                  <button @click="login" :disabled="!ci" class="inline-block w-full px-5 mt-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-prim rounded-lg hover:bg-primh">
                     Ingresar
                   </button>
                   <a v-if="manager" class="flex text-md justify-center text-blue-700 underline hover:underline mt-4" @click="reset = true">
