@@ -155,10 +155,10 @@
             />
           </a-form-model-item>
           <a-form-model-item ref="entrada" label="Hora entrada" prop="entrada">
-            <a-date-picker placeholder="Hora de entrada" v-model="form.entrada" />
+            <a-time-picker placeholder="Hora de entrada" v-model="form.entrada" />
           </a-form-model-item>
           <a-form-model-item ref="salida" label="Hora salida" prop="salida">
-            <a-date-picker placeholder="Hora de salida" v-model="form.salida" />
+            <a-time-picker placeholder="Hora de salida" v-model="form.salida" />
           </a-form-model-item>
           <a-form-model-item v-if="!id" label="Firma electrónica" prop="firma">
             <div class="dropbox">

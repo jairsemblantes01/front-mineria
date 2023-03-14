@@ -15,7 +15,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - token_firmador=asd
+      - token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwZGZlY3VhZG9yIiwiaWF0IjoxNjI0NTUzNTg3LCJleHAiOjQ3ODAyMjcxODd9.zDVHpL9-oVo2L85BpsxrVbqcoRmzXIHDUaHQLKvmlm0
     expose:
       - "5000"
     labels:
