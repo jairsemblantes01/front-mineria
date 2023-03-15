@@ -1,4 +1,4 @@
-const BACKEND = process.env.BACKEND || 'http://localhost:5000'
+const BACKEND = process.env.BACKEND || 'http://localhost:5001'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   // fix
@@ -54,7 +54,7 @@ export default {
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
   ],
   /* devModules: [
     // Doc: https://github.com/nuxt-community/eslint-module

@@ -93,11 +93,11 @@
     <a-modal
       v-model="addUser"
       title="Ingrese un nuevo usuario"
-      :width="650"
+      :width="950"
       @cancel="() => {
         addUser = false
-        this.form = {}
-        this.id = ''
+        form = {}
+        id = ''
       }"
     >
       <template slot="footer">
@@ -106,8 +106,8 @@
             key="back"
             @click="() => {
               addUser = false
-              this.form = {}
-              this.id = ''
+              form = {}
+              id = ''
             }"
           >
             Cancelar
@@ -127,79 +127,186 @@
         :model="form"
         :rules="rules"
       >
-        <div class="grid gap-6 w-full md:grid-cols-2">
-          <a-form-model-item ref="nombre" label="Nombre" prop="nombre">
-            <a-input
-              v-model="form.nombre"
-              placeholder="Ingrese el nombre del usuario"
-            />
-          </a-form-model-item>
+        <a-tabs default-active-key="1">
+          <a-tab-pane
+            key="1"
+            tab="Información del usuario"
+          >
+            <div class="grid gap-6 w-full md:grid-cols-2">
+              <a-form-model-item ref="nombre" label="Nombre" prop="nombre">
+                <a-input
+                  v-model="form.nombre"
+                  placeholder="Ingrese el nombre del usuario"
+                />
+              </a-form-model-item>
 
-          <a-form-model-item ref="id" label="Identificacion" prop="identificacion">
-            <a-input
-              v-model="form.identificacion"
-              placeholder="Ingrese el id del usuario"
-            />
-          </a-form-model-item>
-          <a-form-model-item ref="correo" label="Correo Electronico" prop="correo">
-            <a-input
-              v-model="form.correo"
-              placeholder="Ingrese el correo del usuario"
-            />
-          </a-form-model-item>
-          <a-form-model-item ref="telefono" label="Teléfono" prop="telefono">
-            <a-input-number
-              v-model="form.telefono"
-              style="width: 100%"
-              placeholder="Ingrese Teléfono del operador"
-            />
-          </a-form-model-item>
-          <a-form-model-item ref="entrada" label="Hora entrada" prop="entrada">
-            <a-time-picker placeholder="Hora de entrada" v-model="form.entrada" />
-          </a-form-model-item>
-          <a-form-model-item ref="salida" label="Hora salida" prop="salida">
-            <a-time-picker placeholder="Hora de salida" v-model="form.salida" />
-          </a-form-model-item>
-          <a-form-model-item v-if="!id" label="Firma electrónica" prop="firma">
-            <div class="dropbox">
-              <a-upload-dragger
-                nombre="files"
-                accept=".pfx, .p12"
-                :before-upload="file => loadSign(file)"
-              >
-                <p class="ant-upload-drag-icon">
-                  <a-icon type="file-zip" />
-                </p>
-                <p class="ant-upload-text">
-                  De click o arrastre la firma del usuario
-                </p>
-                <p class="ant-upload-hint">
-                  Unicamente archivos PFX o P12
-                </p>
-              </a-upload-dragger>
+              <a-form-model-item ref="id" label="Identificacion" prop="identificacion">
+                <a-input
+                  v-model="form.identificacion"
+                  placeholder="Ingrese el id del usuario"
+                />
+              </a-form-model-item>
+              <a-form-model-item ref="correo" label="Correo Electronico" prop="correo">
+                <a-input
+                  v-model="form.correo"
+                  placeholder="Ingrese el correo del usuario"
+                />
+              </a-form-model-item>
+              <a-form-model-item ref="telefono" label="Teléfono" prop="telefono">
+                <a-input-number
+                  v-model="form.telefono"
+                  style="width: 100%"
+                  placeholder="Ingrese Teléfono del operador"
+                />
+              </a-form-model-item>
             </div>
-          </a-form-model-item>
-          <a-form-model-item v-if="!id" label="Video" prop="video">
-            <div class="dropbox">
-              <a-upload-dragger
-                nombre="files"
-                accept=".mp4"
-                :before-upload="file => loadVideo(file)"
-              >
-                <p class="ant-upload-drag-icon">
-                  <a-icon type="inbox" />
-                </p>
-                <p class="ant-upload-text">
-                  De click o arrastre el video del usuario
-                </p>
-                <p class="ant-upload-hint">
-                  Unicamente archivos mp4
-                </p>
-              </a-upload-dragger>
+            <a-divider orientation="left">
+              Configuración de horario
+            </a-divider>
+            <div v-if="!form.horarioEspecial" class="grid gap-6 w-full md:grid-cols-2">
+              <a-form-model-item ref="entrada" label="Hora entrada" prop="entrada">
+                <a-time-picker v-model="form.entrada" style="width: 100%" placeholder="Hora de entrada" :format="'HH:mm'" />
+              </a-form-model-item>
+              <a-form-model-item ref="salida" label="Hora salida" prop="salida">
+                <a-time-picker v-model="form.salida" style="width: 100%" placeholder="Hora de salida" :format="'HH:mm'" />
+              </a-form-model-item>
             </div>
-          </a-form-model-item>
-        </div>
+            <a-button v-if="form.horarioEspecial" @click="elegirHorario = true">
+              Ver horario especial
+            </a-button>
+            <div class="my-10">
+              Horario especial:
+              <a-switch v-model="form.horarioEspecial" label="Horario especial" @change="activarHorario" />
+            </div>
+            <a-divider orientation="left">
+              Configuración de cuenta
+            </a-divider>
+            <div class="grid gap-6 w-full md:grid-cols-2">
+              <a-form-model-item label="Firma electrónica" prop="firma">
+                <a-checkbox v-model="form.firmar" :checked="form.firmar">
+                  Firmar contrato con firma electrónica
+                </a-checkbox>
+                <div v-if="form.firmar" class="dropbox">
+                  <a-upload-dragger
+                    nombre="files"
+                    accept=".pfx, .p12"
+                    :before-upload="file => loadSign(file)"
+                  >
+                    <p class="ant-upload-drag-icon">
+                      <a-icon type="file-zip" />
+                    </p>
+                    <p class="ant-upload-text">
+                      De click o arrastre la firma del usuario
+                    </p>
+                    <p class="ant-upload-hint">
+                      Unicamente archivos PFX o P12
+                    </p>
+                  </a-upload-dragger>
+                </div>
+              </a-form-model-item>
+              <a-form-model-item v-if="!id" label="Video" prop="video">
+                <div class="dropbox">
+                  <a-upload-dragger
+                    nombre="files"
+                    accept=".mp4"
+                    :before-upload="file => loadVideo(file)"
+                  >
+                    <p class="ant-upload-drag-icon">
+                      <a-icon type="inbox" />
+                    </p>
+                    <p class="ant-upload-text">
+                      De click o arrastre el video del usuario
+                    </p>
+                    <p class="ant-upload-hint">
+                      Unicamente archivos mp4
+                    </p>
+                  </a-upload-dragger>
+                </div>
+              </a-form-model-item>
+            </div>
+          </a-tab-pane>
+          <a-tab-pane
+            key="2"
+            tab="Ubicación"
+          >
+            <div class>
+              <a-form-model-item label="Modalidad" prop="modalidad">
+                <a-select v-model="form.modalidad" style="width: 100%" placeholder="Seleccione la modalidad">
+                  <a-select-option value="presencial">
+                    Presencial
+                  </a-select-option>
+                  <a-select-option value="virtual">
+                    Virtual
+                  </a-select-option>
+                </a-select>
+              </a-form-model-item>
+              <a-form-model-item label="Radio de marca" prop="radio">
+                <strong class="text-center" style="font-size: 30px; text-align: center">{{ form.radio }} km</strong>
+                <input type="range" min="0" max="20" v-model="form.radio">
+              </a-form-model-item>
+              <span>Marque la ubicación: </span>
+            </div>
+          </a-tab-pane>
+        </a-tabs>
       </a-form-model>
+    </a-modal>
+    <a-modal
+      v-model="elegirHorario"
+      :title="id ? 'Editar horario' : 'Agregar horario especial'"
+      :footer="null"
+      :width="700"
+      @cancel="() => {
+        elegirHorario = false
+        form = {}
+        id = ''
+      }"
+    >
+      <div>
+        <div class="p-4">
+          <div v-for="day in days" :key="day" class="my-4 ">
+            <h3 class="text-lg font-bold">
+              {{ day }}
+            </h3>
+            <div class="grid gap-6 w-full md:grid-cols-2">
+              <div class="flex items-center my-2">
+                <span class="mr-2">Entrada:</span>
+                <a-time-picker
+                  v-model="times[day].start"
+                  style="width: 100%"
+                  :format="format"
+                  :placeholder="placeholder"
+                  class="w-full"
+                  @change="updateTimes(day)"
+                />
+              </div>
+              <div class="flex items-center my-2">
+                <span class="mr-2">Salida:</span>
+                <a-time-picker
+                  v-model="times[day].end"
+                  style="width: 100%"
+                  :format="format"
+                  :placeholder="placeholder"
+                  class="w-full"
+                  @change="updateTimes(day)"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-end">
+            <a-button
+              class="mr-3"
+              @click="() => { elegirHorario = false
+                              form.horarioEspecial = false
+              }"
+            >
+              Cancelar
+            </a-button>
+            <a-button type="primary" @click="elegirHorario = false">
+              Guardar
+            </a-button>
+          </div>
+        </div>
+      </div>
     </a-modal>
   </div>
 </template>
@@ -221,6 +328,17 @@ export default {
       }
     }
     return {
+      elegirHorario: false,
+      days: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'],
+      times: {
+        Lunes: { start: null, end: null },
+        Martes: { start: null, end: null },
+        Miércoles: { start: null, end: null },
+        Jueves: { start: null, end: null },
+        Viernes: { start: null, end: null },
+      },
+      format: 'HH:mm',
+      placeholder: 'Seleccionar hora',
       addUser: false,
       loadingReset: false,
       endpoint: '/api/',
@@ -245,7 +363,7 @@ export default {
           { required: true, message: 'El campo de identificación es obligatorio', trigger: 'blur' },
         ],
         firma: [
-          { required: true, message: 'El campo de firma es obligatorio', trigger: 'blur' }
+          { required: false, message: 'El campo de firma es obligatorio', trigger: 'blur' }
         ],
         video: [
           { required: true, message: 'El campo de video es obligatorio', trigger: 'blur' }
@@ -257,7 +375,20 @@ export default {
           { required: true, message: 'El campo de hora de salida es obligatorio', trigger: 'blur' }
         ]
       },
-      form: {},
+      form: {
+        nombre: '',
+        telefono: '',
+        address: '',
+        correo: '',
+        id: '',
+        firma: '',
+        video: '',
+        entrada: '',
+        salida: '',
+        horarioEspecial: false,
+        firmar: false,
+        radio: 0,
+      },
       isLoading: false,
       couponData: null,
       id: undefined,
@@ -313,6 +444,19 @@ export default {
     }
   },
   methods: {
+    activarHorario (value) {
+      if (value) {
+        this.elegirHorario = true
+      } else {
+        this.elegirHorario = false
+        this.form.horarioEspecial = false
+      }
+    },
+    updateTimes (day) {
+      // Actualizar los horarios de entrada y salida para el día seleccionado
+      const { start, end } = this.times[day]
+      console.log(`Horarios actualizados para ${day}: ${start} - ${end}`)
+    },
     editUserFunc (record) {
       this.addUser = true
       this.form = record
@@ -373,10 +517,14 @@ export default {
           console.log(this.form)
           this.isLoading = true
           try {
+            if (this.form.horarioEspecial) {
+              this.form.fechas = this.times
+            }
             const resp = await this.$axios.$post('/api/save-user', this.form)
             this.addUser = false
             this.id = ''
             this.form = {}
+            this.init()
           } catch (error) {
             const message = error.message && error.response.data.message
             this.$vs.notification({
@@ -399,6 +547,7 @@ export default {
         reader.onload = () => {
           const base64 = reader.result
           this.form.firma = base64.split(',')[1]
+          this.form.firmar = true
         }
       } else {
         this.$vs.notification({

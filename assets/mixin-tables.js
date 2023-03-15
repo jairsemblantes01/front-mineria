@@ -142,6 +142,13 @@ export default {
         this.isLoadingTable = true
         const resp = await this.$axios.$get(this.endpoint)
         this.data = resp
+        this.data.forEach(element => {
+          element.entrada = moment(element.entrada)
+          element.salida = moment(element.salida)
+          if (element.fechas) {
+            this.times = element.fechas
+          }
+        })
       } catch (err) {
         const message = err.response ? err.response.data.message : err.message
         this.$error({
