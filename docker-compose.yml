@@ -16,8 +16,6 @@ services:
       - "3009:3009"
     environment:
       - BACKEND=http://proxy/app1
-    depends_on:
-      - modelo
     labels:
       - "traefik.http.routers.front.rule=PathPrefix(`/app2`)"
       - "traefik.http.middlewares.front.stripprefix.prefixes=/app2"
