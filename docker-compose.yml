@@ -10,18 +10,6 @@ services:
       - 80
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-  modelo:
-    image: jairum/modelo
-    ports:
-      - "5000:5000"
-    environment:
-      - token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwZGZlY3VhZG9yIiwiaWF0IjoxNjI0NTUzNTg3LCJleHAiOjQ3ODAyMjcxODd9.zDVHpL9-oVo2L85BpsxrVbqcoRmzXIHDUaHQLKvmlm0
-    expose:
-      - "5000"
-    labels:
-      - "traefik.http.routers.modelo.rule=PathPrefix(`/app1`)"
-      - "traefik.http.middlewares.modelo.stripprefix.prefixes=/app1"
-      - "traefik.http.routers.modelo.middlewares=modelo"
   front:
     image: jairum/front-mineria
     ports:
